@@ -21,10 +21,13 @@ public class Embauche {
     /**
      * Termine cette embauche
      * @param dateFin la date à laquelle cette embauche est terminée
+     * @throw La date de fin est forcément après la date de début
      */
     public void terminer(LocalDate dateFin) {
-         // TODO: Implémenter cette méthode
-        throw new UnsupportedOperationException("Pas encore implémenté");	    
+        if (dateFin.isAfter(debut)){
+        fin=dateFin;}
+        else
+            throw new IllegalArgumentException("La date de fin ne peux pas être après la date de début");
     }
     
     /**
@@ -32,7 +35,15 @@ public class Embauche {
      * @return vrai si terminée, faux sinon.
      */
     public boolean estTerminee() {
-        return (fin != null);
+        //Si la date de fin n'est pas renseigné alors logiquement l'emploi n'est pas terminé
+        if(fin==null){
+            return false;}
+
+        //Avec now() on récupère la date actuelle
+        LocalDate Today;
+        Today=LocalDate.now();
+        
+        return fin.isBefore(Today);
     }
     /**
      * Get the value of employeur

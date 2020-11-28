@@ -4,8 +4,8 @@
 package FFSSM;
 
 import java.time.LocalDate;
-import java.util.HashSet;
-import java.util.Set;
+
+import java.util.ArrayList;
 
 public class Plongee {
 
@@ -19,17 +19,39 @@ public class Plongee {
 
 	public int duree;
 
-	public Plongee(Site lieu, Moniteur chefDePalanquee, LocalDate date, int profondeur, int duree) {
+        public Club organisateur;
+
+        public ArrayList<Licence> palanquee;
+
+	public Plongee(Club organisateur,Site lieu, Moniteur chefDePalanquee, LocalDate date, int profondeur, int duree) {
 		this.lieu = lieu;
 		this.chefDePalanquee = chefDePalanquee;
 		this.date = date;
 		this.profondeur = profondeur;
 		this.duree = duree;
+                this.organisateur=organisateur;
+                palanquee=new ArrayList();
+                //On faut dire à l'organisateur qu'il s'agit de sa plongee
+                organisateur.organisePlongee(this);
+
+
 	}
+        public Site getLieu(){
+            return lieu;}
+            
+        public ArrayList<Licence> getPalanquee(){
+                return palanquee;}
+
+        public Club getOrganisateur(){
+                return organisateur;}
 
 	public void ajouteParticipant(Plongeur participant) {
-		// TODO: Implémenter cette méthode
-		throw new UnsupportedOperationException("Pas encore implémenté");
+                ArrayList<Licence> licences=new ArrayList();
+                licences=participant.getLicences();
+                Licence dernierLicence=licences.get(licences.size()-1);
+
+		if(!palanquee.contains(dernierLicence)){
+                        palanquee.add(dernierLicence);}
 	}
 
 	public LocalDate getDate() {
@@ -43,8 +65,15 @@ public class Plongee {
 	 * @return vrai si la plongée est conforme
 	 */
 	public boolean estConforme() {
-		// TODO: Implémenter cette méthode
-		throw new UnsupportedOperationException("Pas encore implémenté");
+            
+             for(Licence l:palanquee){
+                if(l.estValide(l.getDelivrance())==false){
+                   return false;
+                }
+            }
+             return true;
+                
+                
 	}
 
 }

@@ -3,10 +3,10 @@
  */
 package FFSSM;
 
-import java.time.LocalDate;
+import java.time.LocalDate ;
 
 public class Licence {
-
+    //La variable possesseur est en read Only
     public Personne possesseur;
 
     public String numero;
@@ -52,8 +52,13 @@ public class Licence {
      * @return vrai si valide à la date d
      **/
     public boolean estValide(LocalDate d) {
-         // TODO: Implémenter cette méthode
-        throw new UnsupportedOperationException("Pas encore implémenté");
+         LocalDate Today;
+         Today=LocalDate.now();
+         //Avec now() on récupère la date actuelle
+         
+         //isBefore renvoie True si la date d'aujourd'hui est antérieur à la date à tester
+         
+         return d.isAfter(Today);
     }
 
 }
